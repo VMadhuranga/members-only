@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 
+const messageRouter = require("./routes/message-route");
+
 // Set up mongoose connection
 mongoose.set("strictQuery", false);
 const mongoDB = process.env.MONGODB_URI;
@@ -26,6 +28,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use("/", messageRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
