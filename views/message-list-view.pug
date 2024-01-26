@@ -1,0 +1,18 @@
+extends layout-view
+
+block header-content 
+  nav 
+    ul 
+      li 
+        a(href="/signup") Sign up 
+      li 
+        a(href="/login") Login
+
+block main-content
+  div 
+    if messageList.length 
+      each message in messageList
+        div 
+          p #{message.message}
+    else 
+      p There're no messages 
