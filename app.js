@@ -7,6 +7,7 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 
 const messageRouter = require("./routes/message-route");
+const userRouter = require("./routes/user-route");
 
 // Set up mongoose connection
 mongoose.set("strictQuery", false);
@@ -30,6 +31,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", messageRouter);
+app.use("/", userRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
