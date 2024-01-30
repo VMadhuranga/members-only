@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
+const passport = require("passport");
 
 const UserModel = require("../models/user-model");
 
@@ -71,7 +72,40 @@ const userSignUpPost = [
   }),
 ];
 
+const userLoginGet = (req, res) => {
+  res.render("login-form-view", {
+    title: "Log in",
+  });
+};
+
+const userLoginPost = [
+  body("user-name").trim().escape(),
+  body("password").trim().escape(),
+
+  (req, res, next) => {
+    passport.authenticate("local", (err, user, info) => {
+      if (err) {
+        next(err);
+      } else if (!user) {
+        res.render("login-form-view", {
+          title: "Log in",
+          loginError: info,
+          userName: req.body["user-name"],
+        });
+      } else {
+        req.login(user, next);
+      }
+    })(req, res, next);
+  },
+
+  (req, res) => {
+    res.redirect("/");
+  },
+];
+
 module.exports = {
   userSignUpGet,
   userSignUpPost,
+  userLoginGet,
+  userLoginPost,
 };
