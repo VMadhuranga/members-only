@@ -1,0 +1,19 @@
+extends layout-view 
+
+block main-content 
+  h2 Log in 
+  form(method="post") 
+    div 
+      label(for="user-name") User Name: 
+      input(type="text", name="user-name", id="user-name", required, value=userName || "")
+      if loginError && loginError.message.includes("User")
+        span #{loginError.message}
+    div 
+      label(for="password") Password: 
+      input(type="password", name="password", id="password", required)
+      if loginError && loginError.message.includes("Password")
+        span #{loginError.message}
+    div 
+      button(type="submit") Log in 
+  p Doesn't have an account? 
+    a(href="/signup") Sign up
