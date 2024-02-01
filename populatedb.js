@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+require("dotenv").config();
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
@@ -77,7 +78,7 @@ async function createNewMember(
     await newMember.save();
   });
   members[index] = newMember;
-  console.log(`Added memeber: ${userName}`);
+  console.log(`Added member: ${userName}`);
 }
 
 async function createNewUser(index, firstName, lastName, userName, password) {
@@ -125,7 +126,7 @@ async function createUsers() {
     createNewUser(0, "john", "doe", "jdoe", "jdoe1234"),
     createNewUser(1, "mike", "tyson", "mtyson", "mtyson1234"),
     createNewUser(2, "joe", "rogan", "jrogan", "jrogan1234"),
-    createNewMember(0, "json", "momoa", "jmomoa", "jmomoa1234", "member"),
+    createNewMember(0, "jason", "momoa", "jmomoa", "jmomoa1234", "member"),
     createNewMember(1, "kevin", "josef", "kjosef", "kjosef1234", "member"),
   ]);
 }
@@ -138,7 +139,7 @@ async function createMessages() {
     createNewMessage(1, users[0], "Hello I'm John Doe"),
     createNewMessage(2, users[1], "Hello I'm Mike Tyson"),
     createNewMessage(3, users[2], "Hello I'm Joe Rogan"),
-    createNewMessage(4, members[0], "Hello I'm Joson Momoa (Member)"),
-    createNewMessage(5, members[1], "Hello I'm Kevin Josef (Member)"),
+    createNewMessage(4, members[0], "Hello I'm Jason Momoa"),
+    createNewMessage(5, members[1], "Hello I'm Kevin Josef"),
   ]);
 }
