@@ -115,7 +115,13 @@ async function createUsers() {
   console.log("Adding users");
 
   await Promise.all([
-    createAdmin("admin", "nimda", "animda", "animda1234", "admin"),
+    createAdmin(
+      "admin",
+      "admin",
+      process.env.ADMIN_USERNAME,
+      process.env.ADMIN_PASSWORD,
+      "admin",
+    ),
     createNewUser(0, "john", "doe", "jdoe", "jdoe1234"),
     createNewUser(1, "mike", "tyson", "mtyson", "mtyson1234"),
     createNewUser(2, "joe", "rogan", "jrogan", "jrogan1234"),
