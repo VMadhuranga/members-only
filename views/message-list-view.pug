@@ -1,18 +1,51 @@
 extends layout-view
 
 block header-content 
-  nav 
-    ul 
-      li 
-        a(href="/signup") Sign up 
-      li 
-        a(href="/login") Login
+  if currentUser
+    p 
+      a(href="/logout") Log out
+  else 
+    nav 
+      ul 
+        li 
+          a(href="/signup") Sign up 
+        li 
+          a(href="/login") Login
 
 block main-content
+  if currentUser 
+    h2 Hello #{currentUser.firstName} #{currentUser.lastName}
+    if currentUser.role === "user"
+      p 
+        a(href="/become-member") Become a member
   div 
     if messageList.length 
       each message in messageList
+        - const unescapedMsg = unescape(message.message)
         div 
-          p #{message.message}
+          if currentUser 
+            if currentUser.role === "member" || currentUser.role === "admin"
+              h3 #{message.user.userName} 
+              p #{unescapedMsg}
+              p #{new Date(message.date).toLocaleString()}
+            if currentUser.role === "admin" 
+              form(action="/delete-message", method="post") 
+                input(type="hidden", name="message-id", value=message._id)
+                button(type="submit") Delete Message
+              form(action="/delete-user", method="post") 
+                input(type="hidden", name="user-id", value=message.user._id)
+                button(type="submit") Delete User
+            if currentUser.role === "user"
+              p #{unescapedMsg}
+          else 
+            p #{unescapedMsg}
     else 
       p There're no messages 
+  if currentUser 
+    form(action="/create-message", method="post") 
+      textarea(name="message", cols="30", rows="10", maxlength="200", required, placeholder="Type your message")
+      if postError 
+        ul 
+          each error in postError
+            li #{error.msg}
+      button(type="submit") Post
