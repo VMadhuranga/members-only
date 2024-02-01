@@ -16,14 +16,20 @@ const userSignUpPost = [
   body("first-name", "First name must not be empty")
     .trim()
     .isLength({ min: 1 })
+    .isAlpha()
+    .withMessage("First Name should only contain letters")
     .escape(),
   body("last-name", "Last Name must not be empty")
     .trim()
     .isLength({ min: 1 })
+    .isAlpha()
+    .withMessage("Last Name should only contain letters")
     .escape(),
   body("user-name", "User Name must not be empty")
     .trim()
     .isLength({ min: 1 })
+    .isAlphanumeric()
+    .withMessage("User Name should only contain letters and numbers")
     .escape()
     .custom(async (value) => {
       const exitingUser = await UserModel.findOne({
@@ -36,6 +42,8 @@ const userSignUpPost = [
   body("password", "Password must not be empty")
     .trim()
     .isLength({ min: 1 })
+    .isAlphanumeric()
+    .withMessage("Password should only contain letters and numbers")
     .escape(),
   body("confirm-password", "Passwords not match")
     .trim()
@@ -128,6 +136,47 @@ const deleteUserPost = asyncHandler(async (req, res, next) => {
   res.redirect("/");
 });
 
+const userToMemberGet = (req, res) => {
+  res.render("become-member-form-view", {
+    title: "Become a member",
+  });
+};
+
+const userToMemberPost = [
+  body("member-secret", "Member Secret should not be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .isAlpha()
+    .withMessage("Member Secret should only contain letters")
+    .escape()
+    .custom((value) => value === process.env.MEMBER_SECRET)
+    .withMessage("Incorrect Member Secret"),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.render("become-member-form-view", {
+        title: "Become a member",
+        memberSecret: req.body["member-secret"],
+        errors: errors.array(),
+      });
+    } else {
+      const user = new UserModel({
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        userName: req.user.userName,
+        password: req.user.password,
+        role: "member",
+        _id: req.user.id,
+      });
+
+      await UserModel.findByIdAndUpdate(req.user.id, user, {});
+      res.redirect("/");
+    }
+  }),
+];
+
 module.exports = {
   userSignUpGet,
   userSignUpPost,
@@ -135,4 +184,6 @@ module.exports = {
   userLoginPost,
   userLogOutGet,
   deleteUserPost,
+  userToMemberGet,
+  userToMemberPost,
 };
