@@ -10,5 +10,7 @@ router.get("/login", userController.userLoginGet);
 router.post("/login", userController.userLoginPost);
 router.get("/logout", userController.userLogOutGet);
 router.post("/delete-user", userController.deleteUserPost);
+router.get("/become-member", userController.userToMemberGet);
+router.post("/become-member", userController.userToMemberPost);
 
 module.exports = router;
