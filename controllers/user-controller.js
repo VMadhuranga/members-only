@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const passport = require("passport");
 
 const UserModel = require("../models/user-model");
+const MessageModel = require("../models/message-model");
 
 const userSignUpGet = (req, res) => {
   res.render("signup-form-view", {
@@ -103,9 +104,35 @@ const userLoginPost = [
   },
 ];
 
+const userLogOutGet = (req, res, next) => {
+  req.logOut((err) => {
+    if (err) {
+      next(err);
+    } else {
+      res.redirect("/");
+    }
+  });
+};
+
+const deleteUserPost = asyncHandler(async (req, res, next) => {
+  const allMessagesByUser = await MessageModel.countDocuments({
+    user: req.body["user-id"],
+  }).exec();
+
+  // Check user has messages and user is not admin to prevent accidentally delete admin
+  if (allMessagesByUser > 0 && req.user.id !== req.body["user-id"]) {
+    await MessageModel.deleteMany({ user: req.body["user-id"] });
+    await UserModel.findByIdAndDelete(req.body["user-id"]);
+  }
+
+  res.redirect("/");
+});
+
 module.exports = {
   userSignUpGet,
   userSignUpPost,
   userLoginGet,
   userLoginPost,
+  userLogOutGet,
+  deleteUserPost,
 };
