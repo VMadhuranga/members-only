@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const UserModel = require("./models/user-model");
 const MessageModel = require("./models/message-model");
@@ -39,8 +40,16 @@ async function createAdmin(firstName, lastName, userName, password, role) {
     role,
   });
 
-  await newAdmin.save();
+  bcrypt.hash(newAdmin.password, 10, async (err, hashedPassword) => {
+    if (err) {
+      throw new Error(err);
+    }
+
+    newAdmin.password = await hashedPassword;
+    await newAdmin.save();
+  });
   admin = newAdmin;
+  console.log(`Added admin: ${userName}`);
 }
 
 async function createNewMember(
@@ -59,8 +68,16 @@ async function createNewMember(
     role,
   });
 
-  await newMember.save();
+  bcrypt.hash(newMember.password, 10, async (err, hashedPassword) => {
+    if (err) {
+      throw new Error(err);
+    }
+
+    newMember.password = await hashedPassword;
+    await newMember.save();
+  });
   members[index] = newMember;
+  console.log(`Added memeber: ${userName}`);
 }
 
 async function createNewUser(index, firstName, lastName, userName, password) {
@@ -71,7 +88,14 @@ async function createNewUser(index, firstName, lastName, userName, password) {
     password,
   });
 
-  await newUser.save();
+  bcrypt.hash(newUser.password, 10, async (err, hashedPassword) => {
+    if (err) {
+      throw new Error(err);
+    }
+
+    newUser.password = await hashedPassword;
+    await newUser.save();
+  });
   users[index] = newUser;
   console.log(`Added user: ${userName}`);
 }
@@ -91,7 +115,7 @@ async function createUsers() {
   console.log("Adding users");
 
   await Promise.all([
-    createAdmin("admin", "nimda", "animda", "nimda1234", "admin"),
+    createAdmin("admin", "nimda", "animda", "animda1234", "admin"),
     createNewUser(0, "john", "doe", "jdoe", "jdoe1234"),
     createNewUser(1, "mike", "tyson", "mtyson", "mtyson1234"),
     createNewUser(2, "joe", "rogan", "jrogan", "jrogan1234"),
