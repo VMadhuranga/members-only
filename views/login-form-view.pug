@@ -2,7 +2,7 @@ extends layout-view
 
 block main-content 
   h2 Log in 
-  form(method="post") 
+  form.default-form(method="post") 
     div 
       label(for="user-name") User Name: 
       input(type="text", name="user-name", id="user-name", required, value=userName || "")

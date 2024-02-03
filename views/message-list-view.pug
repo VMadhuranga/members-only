@@ -14,18 +14,19 @@ block header-content
 
 block main-content
   if currentUser 
-    h2 Hello #{currentUser.firstName} #{currentUser.lastName}
+    h2 Hello #{currentUser.firstName} #{currentUser.lastName},
     if currentUser.role === "user"
       p 
-        a(href="/become-member") Become a member
-  div 
+        a(href="/become-member") Become a member &#128072;
+  h3 Message Board
+  div.message-container 
     if messageList.length 
       each message in messageList
         - const unescapedMsg = unescape(message.message)
-        div 
+        div.message-card 
           if currentUser 
             if currentUser.role === "member" || currentUser.role === "admin"
-              h3 #{message.user.userName} 
+              h4 #{message.user.userName} 
               p #{unescapedMsg}
               p #{new Date(message.date).toLocaleString()}
             if currentUser.role === "admin" 
@@ -42,8 +43,8 @@ block main-content
     else 
       p There're no messages 
   if currentUser 
-    form(action="/create-message", method="post") 
-      textarea(name="message", cols="30", rows="10", maxlength="200", required, placeholder="Type your message")
+    form.create-message(action="/create-message", method="post") 
+      textarea(name="message", cols="30", rows="5", maxlength="200", required, placeholder="Type your message")
       if postError 
         ul 
           each error in postError
