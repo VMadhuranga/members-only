@@ -5,7 +5,10 @@ const unescape = require("../utils/unescape");
 const MessageModel = require("../models/message-model");
 
 const messageListGet = asyncHandler(async (req, res, next) => {
-  const allMessages = await MessageModel.find({}).populate("user").exec();
+  const allMessages = await MessageModel.find({})
+    .populate("user")
+    .sort({ date: -1 })
+    .exec();
 
   res.render("message-list-view", {
     title: "Message List",
