@@ -188,6 +188,42 @@ main a {
   }
 }
 
+.default-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.default-form > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.default-form input {
+  font-size: 1.1rem;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #720455;
+  color: white;
+  outline-offset: 2px;
+
+  &:focus {
+    outline: 2px solid #720455;
+  }
+}
+
+.default-form button {
+  padding: 5px;
+  background-color: #030637;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
 footer {
   background-color: #720455;
   padding: 10px;
