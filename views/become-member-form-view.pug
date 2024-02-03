@@ -2,7 +2,7 @@ extends layout-view
 
 block main-content 
   h2 Become a member 
-  form(method="post") 
+  form.default-form(method="post") 
     div 
       label(for="member-secret") Member Secret: 
       input(type="text", name="member-secret", id="member-secret" value=memberSecret || "") 

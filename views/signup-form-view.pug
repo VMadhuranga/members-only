@@ -2,7 +2,7 @@ extends layout-view
 
 block main-content 
   h2 Sign up
-  form(method="post") 
+  form.default-form(method="post") 
     div 
       label(for="first-name") First Name: 
       input(type="text", name="first-name", id="first-name", required, value=user ? user.firstName : "")
