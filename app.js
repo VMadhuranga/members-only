@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 require("dotenv").config();
 const createError = require("http-errors");
 const express = require("express");
@@ -9,6 +10,9 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const bcrypt = require("bcryptjs");
+const compression = require("compression");
+const helmet = require("helmet");
+const RateLimit = require("express-rate-limit");
 
 const UserModel = require("./models/user-model");
 
@@ -27,6 +31,17 @@ async function main() {
 
 const app = express();
 
+// Add helmet to the middleware chain.
+app.use(helmet());
+
+// Set up rate limiter: maximum of sixty requests per minute
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 60,
+});
+// Apply rate limiter to all requests
+app.use(limiter);
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
@@ -35,6 +50,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(compression()); // Compress all routes
 app.use(express.static(path.join(__dirname, "public")));
 
 // Setup passport
