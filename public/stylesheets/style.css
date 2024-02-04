@@ -228,6 +228,38 @@ main a {
   }
 }
 
+.default-form span {
+  color: red;
+}
+
+.faq-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  padding: 10px;
+}
+
+.faq-section > :nth-child(odd) {
+  align-self: first baseline;
+}
+
+.faq-section > :nth-child(even) {
+  align-self: last baseline;
+}
+
+.faq-section section > :last-child {
+  margin: 5px 0 0 10px;
+}
+
+.faq-section h4 {
+  font-size: 1.4rem;
+}
+
+.faq-section p {
+  font-size: 1.1rem;
+}
+
 footer {
   background-color: #720455;
   padding: 10px;
