@@ -1,0 +1,37 @@
+extends layout-view 
+
+block header-content 
+  nav 
+    ul 
+      li 
+        a(href="/home") Home 
+      if currentUser        
+        li 
+          a(href="/logout") Log out 
+      else 
+        li 
+          a(href="/signup") Sign up 
+        li 
+          a(href="/login") Login
+
+block main-content 
+  h2 Frequently asked questions 
+
+  div.faq-section 
+    section 
+      h4 Why can't I post messages?
+      p Every User must log-in to post messages.
+    section 
+      h4 I cannot see my user name?
+      p Only "Admin" and "Members" can see user name. 
+    section 
+      h4 I cannot delete my messages?
+      p Only "Admin" can delete user messages.
+    section 
+      h4 I cannot delete my account?
+      p Only "Admin" can delete user accounts.
+    section 
+      h4 How can I become a member?
+      p You need enter member pass key 
+        i
+          small  #{"("}hint: it's starts with "m" and ends with "r"#{")"}

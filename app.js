@@ -14,6 +14,7 @@ const UserModel = require("./models/user-model");
 
 const messageRouter = require("./routes/message-route");
 const userRouter = require("./routes/user-route");
+const indexRouter = require("./routes/index-route");
 
 // Set up mongoose connection
 mongoose.set("strictQuery", false);
@@ -90,6 +91,7 @@ app.use((req, res, next) => {
 
 app.use("/", messageRouter);
 app.use("/", userRouter);
+app.use("/", indexRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
