@@ -1,16 +1,18 @@
 extends layout-view
 
 block header-content 
-  if currentUser
-    p 
-      a(href="/logout") Log out
-  else 
-    nav 
-      ul 
+  nav 
+      ul
+        if currentUser
+          li 
+            a(href="/logout") Log out
+        else 
+          li 
+            a(href="/signup") Sign up 
+          li 
+            a(href="/login") Login
         li 
-          a(href="/signup") Sign up 
-        li 
-          a(href="/login") Login
+          a(href="/faq") FAQs
 
 block main-content
   if currentUser 
