@@ -1,5 +1,16 @@
 extends layout-view 
 
+block header-content 
+  nav 
+    ul 
+      li 
+        a(href="/home") Home 
+      if currentUser 
+        li 
+          a(href="/logout") Log out 
+      li 
+        a(href="/faq") FAQs 
+
 block main-content 
   h2 Become a member 
   form.default-form(method="post") 
