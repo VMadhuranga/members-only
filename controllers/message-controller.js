@@ -7,7 +7,7 @@ const MessageModel = require("../models/message-model");
 const messageListGet = asyncHandler(async (req, res, next) => {
   const allMessages = await MessageModel.find({})
     .populate("user")
-    .sort({ date: -1 })
+    .sort({ _id: -1 })
     .exec();
 
   res.render("message-list-view", {
