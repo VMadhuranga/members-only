@@ -48,7 +48,6 @@ block main-content
     form.create-message(action="/create-message", method="post") 
       textarea(name="message", cols="30", rows="5", maxlength="200", required, placeholder="Type your message")
       if postError 
-        ul 
-          each error in postError
-            li #{error.msg}
+        each error in postError
+          span #{error.msg}
       button(type="submit") Post

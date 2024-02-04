@@ -18,8 +18,7 @@ block main-content
       label(for="member-secret") Member Secret: 
       input(type="text", name="member-secret", id="member-secret" value=memberSecret || "") 
       if errors 
-        ul 
-          each error in errors 
-            li #{error.msg}
+        each error in errors 
+          span #{error.msg}
     div 
       button(type="submit") Submit
