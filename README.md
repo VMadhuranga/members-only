@@ -9,7 +9,7 @@ See [live preview](https://member-s-only.adaptable.app/) :point_left:
 
 ## Learning outcomes
 
-This project is intend to practice:
+This project is intended to practice:
 
 - How use PassportJS to set up user authentication with Express.
 - How to hash passwords using bcryptjs.
