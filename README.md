@@ -5,7 +5,7 @@
 A club house exclusive messaging app for [The Odin Project](https://www.theodinproject.com/) curriculum's
 [Members Only](https://www.theodinproject.com/lessons/nodejs-members-only) project assignment
 
-See [live preview](https://member-s-only.adaptable.app/) :point_left:
+**TODO: Add live preview**
 
 ## Learning outcomes
 
